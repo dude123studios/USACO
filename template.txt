@@ -1,0 +1,10 @@
+import java.io.*;
+import java.util.*;
+
+public static void main(String[] args) throws IOException{
+    String ProjectName = "";
+    Scanner sc = new Scanner(new File(ProjectName + ".in"));
+	PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(ProjectName + ".out")));
+
+        
+}
