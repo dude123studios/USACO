@@ -1,26 +1,25 @@
 import java.io.*;
 import java.util.*;
 
-public class ABCs {
+public class AngryCows {
+
+    public void explode(int pos, int t) {
+        bales[t]
+    }
 
     public static void main(String[] args) throws IOException {
-        Kattio io = new Kattio();
-        int a, b, c;
-        int[] vals = new int[7];
-        for (int i = 1; i < 7; i++) {
-            vals[i] = io.nextInt();
+        Kattio io = new Kattio("angry");
+        int N = io.nextInt();
+        int bales[] = new int[N];
+        for(int i =0; i< N; i++) {
+            bales[i] = io.nextInt();
         }
-        Arrays.sort(vals);
-        a = vals[0];
-        b = vals[1];
-        if (vals[2] != a + b)
-            c = vals[2];
-        else
-            c = vals[3];
-
-        io.println(a + " " + b + " " + c);
-        io.close();
-
+        Arrays.sort(bales);
+        for(int i =0; i < bales.length; i++) {
+            for(int t = 0; t < bales.length; t++) {
+                if(bales[i + t])
+            }
+        }
     }
 
     static class Kattio extends PrintWriter {
