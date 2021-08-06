@@ -4,7 +4,7 @@ import java.util.*;
 public static void main(String[] args) throws IOException{
     Kattio io = new Kattio();
 
-    
+	io.close();
 }
 
 static class Kattio extends PrintWriter {
