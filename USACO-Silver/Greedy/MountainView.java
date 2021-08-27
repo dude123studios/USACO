@@ -1,46 +1,44 @@
 import java.io.*;
 import java.util.*;
 
-public class Swapity {
+class Range implements Comparable<Range> {
+    int start, end, height;
+
+    public Range(int x, int y) {
+        this.start = x - y;
+        this.end = x + y;
+        this.height = y;
+    }
+
+    public int compareTo(Range p) {
+        if (p.start == start) {
+            if (p.height < height)
+                return -1;
+            return 1;
+        }
+        return p.start < start ? 1 : -1;
+    }
+}
+
+public class MountainView {
 
     public static void main(String[] args) throws IOException {
-        Kattio io = new Kattio("q");
-        int n = io.nextInt(), m = io.nextInt(), k = io.nextInt();
-        int[] map = new int[n];
+        Kattio io = new Kattio();
+        int n = io.nextInt();
+        Range[] ranges = new Range[n];
         for (int i = 0; i < n; i++) {
-            map[i] = i;
+            ranges[i] = new Range(io.nextInt(), io.nextInt());
         }
-        for (int i = 0; i < m; i++) {
-            int l = io.nextInt() - 1, r = io.nextInt() - 1;
-            for (int j = 0; j < (l + r) / 2; j++) {
-                int temp = map[j];
-                map[l + j] = map[r - j];
-                map[r - j] = temp;
-            }
-        }
-
-        ArrayList<Integer> cycle;
-        int[] ans = new int[n];
-        boolean visited[] = new boolean[n];
+        Arrays.sort(ranges);
+        int maxr = 0;
+        int count = 0;
         for (int i = 0; i < n; i++) {
-            if (visited[i])
+            if (ranges[i].end <= maxr)
                 continue;
-            System.out.println(i);
-            int curr = map[i];
-            cycle = new ArrayList<Integer>();
-            while (curr != i) {
-                visited[curr] = true;
-                cycle.add(curr);
-                curr = map[curr];
-            }
-            for (int j = 0; j < cycle.size(); j++) {
-                ans[cycle.get((j + k % cycle.size()) % cycle.size())] = cycle.get(j);
-            }
+            maxr = ranges[i].end;
+            count++;
         }
-        for (int i = 0; i < n; i++) {
-            io.println(ans[i]);
-            System.out.println(ans[i]);
-        }
+        io.println(count);
         io.close();
     }
 

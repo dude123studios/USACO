@@ -8,24 +8,26 @@ public class AwkwardDigits {
 
         String n2String = io.next();
         int n2 = 0;
-        int p2 = 1;
-        for (int i = 0; i < n2String.length(); i++) {
-            n2 += p2 * (n2String.charAt(i) - '0');
-            p2 = 2 * p2;
+        for (int i = n2String.length() - 1; i >= 0; i--) {
+            n2 += (1 << (n2String.length() - 1 - i)) * (n2String.charAt(i) - '0');
         }
         String n3String = io.next();
         int n3 = 0;
-        int p3 = 1;
-        for (int i = 0; i < n3String.length(); i++) {
-            n3 += p3 * (n3String.charAt(i) - '0');
-            p3 = 3 * p3;
+        int[] p3 = new int[n3String.length()];
+        p3[0] = 1;
+        for (int i = n3String.length() - 1; i >= 0; i--) {
+            n3 += p3[n3String.length() - 1 - i] * (n3String.charAt(i) - '0');
+            if (i != 0)
+                p3[n3String.length() - i] = 3 * p3[n3String.length() - 1 - i];
         }
         for (int i = 0; i < n2String.length(); i++) {
             for (int j = 0; j < n3String.length(); j++) {
                 for (int a = 0; a < 2; a++) {
                     for (int b = 0; b < 3; b++) {
-                        int newn2 = (a - (n2String.charAt(i) - '0')) * ((int) Math.pow(2, i)) + n2;
-                        int newn3 = (b - (n3String.charAt(j) - '0')) * ((int) Math.pow(3, j)) + n3;
+                        if (n2String.charAt(i) - '0' == a || n3String.charAt(j) - '0' == b)
+                            continue;
+                        int newn2 = (a - (n2String.charAt(i) - '0')) * (1 << (n2String.length() - 1 - i)) + n2;
+                        int newn3 = (b - (n3String.charAt(j) - '0')) * p3[n3String.length() - 1 - j] + n3;
                         if (newn2 == newn3) {
                             io.println(newn2);
                             io.close();

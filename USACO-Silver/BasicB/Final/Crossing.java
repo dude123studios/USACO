@@ -1,62 +1,46 @@
 import java.io.*;
 import java.util.*;
 
-class Interval implements Comparable<Interval> {
-    long s, e;
+public class Crossing {
 
-    public Interval(long start, long end) {
-        this.s = start;
-        this.e = end;
-    }
+    static int n, m, c;
+    static int[] t;
 
-    public int compareTo(Interval other) {
-        return other.s > s ? -1 : 1;
-    }
-}
-
-public class SocialDistance {
-    static Interval[] intervals;
-    static int n, m;
-
-    static boolean check(long dist) {
+    static boolean check(int d) {
         int index = 0;
-        long prev = intervals[0].s;
-        for (int i = 1; i < n; i++) {
-            while (index < m && prev + dist > intervals[index].e) {
+        for (int i = 0; i < m; i++) {
+            int first = t[index];
+            int count = 1;
+            while (count <= c && index < n && t[index] - first <= d) {
                 index++;
+                count++;
             }
-            if (index >= m) {
-                return false;
-            }
-            if (prev + dist < intervals[index].s) {
-                prev = intervals[index].s;
-            } else {
-                prev = prev + dist;
-            }
+
+            if (index >= n)
+                return true;
         }
-        return true;
+        return false;
     }
 
     public static void main(String[] args) throws IOException {
         Kattio io = new Kattio();
         n = io.nextInt();
         m = io.nextInt();
-        long high = 0;
-        intervals = new Interval[m];
-        for (int i = 0; i < m; i++) {
-            long s = io.nextInt();
-            long e = io.nextInt();
-            high = Math.max(high, e);
-            intervals[i] = new Interval(s, e);
+        c = io.nextInt();
+        t = new int[n];
+        int high = 0;
+        for (int i = 0; i < n; i++) {
+            t[i] = io.nextInt();
+            high = Math.max(high, t[i]);
         }
-        Arrays.sort(intervals);
-        long low = 0;
-        while (low <= high) {
-            long mid = (high + low) / 2;
+        Arrays.sort(t);
+        int low = 0;
+        while (low < high) {
+            int mid = (low + high) / 2;
             if (check(mid)) {
-                low = mid + 1;
+                high = mid;
             } else {
-                high = mid - 1;
+                low = mid + 1;
             }
         }
         io.println(high);
