@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "span": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp"
+    }
+}
